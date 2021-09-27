@@ -1,4 +1,4 @@
-In my private project, I found that client's request doesn't work always when the request call is made in a callback of a server. More specifically, `rclcpp::spin_until_future_complete` causes exception saying `Node has already been added to an executor`. I would like to ask how to avoid it. And if it is a bag, please take it as a bug report. 
+In my private project, I found that client's request doesn't work always when the request call is made in a callback of a server. More specifically, `rclcpp::spin_until_future_complete` causes exception saying `Node has already been added to an executor`. I would like to ask how to avoid it. I suspect that this [TODO-comment](https://github.com/ros2/rclcpp/blob/fa3a6fa597c5d40b2fce46e5fb95f541e62076e7/rclcpp/include/rclcpp/executor.hpp#L336) is relevant to this issue, but I'm not sure.
 
 To reproduce this phenomenon, I made a minimal repository in https://github.com/HiroIshida/server_client_fail_ros2.git
 
@@ -14,8 +14,7 @@ As the following diagram shows, `client` request `/trigger1`. `serverclient` the
 ```
 client --> (/trigger1) --> serverclient --> (/trigger2) --> server
 ```
-
-Then you can get the following exception
+As I mentioned, serverclient makes a request inside the server's callback function, thus the following error occurs:
 ```
 h-ishida@ishidax1:~$ ros2 run sample serverclient 
 [INFO] [1632708805.596528109] [serverclient]: serverclient init
