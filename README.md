@@ -2,7 +2,7 @@ In my private project, I found that client's request doesn't work always when th
 
 To reproduce this phenomenon, I made a minimal repository in https://github.com/HiroIshida/server_client_fail_ros2.git
 
-To reproduce the phenomenon, after installing this package, please run
+To reproduce the phenomenon, after installing `sample` package in the repository, and please run
 ```
 ros2 run sample server
 ros2 run sample serverclinet
